@@ -1,0 +1,134 @@
+<h3>Cadastro de Produtos</h3>
+<p>Preencha os campos para incluir um produto</p>
+<hr />
+
+<div
+  *ngIf="mensagem"
+  class="alert alert-info alert-dismissible fade show"
+  role="alert"
+>
+  <strong>{{ mensagem }}</strong>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="mensagem = ''"
+    aria-label="Close"
+  ></button>
+</div>
+
+<form [formGroup]="formCadastro" (ngSubmit)="onSubmit()">
+  <div class="row mb-2">
+    <div class="col-md-6">
+      <label>Nome do produto:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Digite o nome aqui"
+        formControlName="nome"
+      />
+
+      <span class="text-danger" *ngIf="form.nome.touched && form.nome.invalid">
+        <span *ngIf="form.nome.errors.required">
+          Por favor, informe o nome do produto.
+        </span>
+        <span *ngIf="form.nome.errors.minlength">
+          Por favor, informe no mínimo 8 caracteres.
+        </span>
+        <span *ngIf="form.nome.errors.maxlength">
+          Por favor, informe no máximo 100 caracteres.
+        </span>
+      </span>
+    </div>
+    <div class="col-md-3">
+      <label>Preço do produto:</label>
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Digite o preço aqui"
+        formControlName="preco"
+      />
+
+      <span
+        class="text-danger"
+        *ngIf="form.preco.touched && form.preco.invalid"
+      >
+        <span *ngIf="form.preco.errors.required">
+          Por favor, informe o preço do produto.
+        </span>
+        <span *ngIf="form.preco.errors.min">
+          Por favor, informe no mínimo 0.
+        </span>
+        <span *ngIf="form.preco.errors.max">
+          Por favor, informe no máximo 999999.
+        </span>
+      </span>
+    </div>
+    <div class="col-md-3">
+      <label>Quantidade do produto:</label>
+      <input
+        type="number"
+        class="form-control"
+        placeholder="Digite a quantidade aqui"
+        formControlName="quantidade"
+      />
+
+      <span
+        class="text-danger"
+        *ngIf="form.quantidade.touched && form.quantidade.invalid"
+      >
+        <span *ngIf="form.quantidade.errors.required">
+          Por favor, informe a quantidade do produto.
+        </span>
+        <span *ngIf="form.quantidade.errors.min">
+          Por favor, informe no mínimo 0.
+        </span>
+        <span *ngIf="form.quantidade.errors.max">
+          Por favor, informe no máximo 9999.
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-12">
+      <label>Descrição do produto:</label>
+      <textarea
+        class="form-control"
+        formControlName="descricao"
+        placeholder="Digite a descrição aqui"
+      ></textarea>
+
+      <span
+        class="text-danger"
+        *ngIf="form.descricao.touched && form.descricao.invalid"
+      >
+        <span *ngIf="form.descricao.errors.required">
+          Por favor, informe a descrição do produto.
+        </span>
+        <span *ngIf="form.descricao.errors.minlength">
+          Por favor, informe no mínimo 8 caracteres.
+        </span>
+        <span *ngIf="form.descricao.errors.maxlength">
+          Por favor, informe no máximo 200 caracteres.
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <div class="row mb-2">
+    <div class="col-md-12">
+      <input
+        type="submit"
+        class="btn btn-success"
+        value="Realizar Cadastro"
+        [disabled]="!formCadastro.valid"
+      />
+      <a
+        [routerLink]="['/pages/consulta-produtos']"
+        class="btn btn-secondary ms-2"
+      >
+        Ir para a consulta
+      </a>
+    </div>
+  </div>
+</form>

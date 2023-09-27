@@ -1,0 +1,158 @@
+<h3>Consulta de Produtos</h3>
+<p>Listagem de produtos cadastrados</p>
+<hr />
+
+<div
+  *ngIf="mensagem"
+  class="alert alert-info alert-dismissible fade show"
+  role="alert"
+>
+  <strong>{{ mensagem }}</strong>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="mensagem = ''"
+    aria-label="Close"
+  ></button>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-sm table-hover table-striped">
+    <thead>
+      <tr>
+        <th [width]="200">Nome do produto</th>
+        <th>Preço</th>
+        <th>Qtd</th>
+        <th>Total</th>
+        <th [width]="300">Descrição</th>
+        <th>Criado em</th>
+        <th>Modificado em</th>
+        <th [width]="140">Operações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of produtos">
+        <td>{{ item.nome | uppercase }}</td>
+        <td>{{ item.preco | currency : "R$" }}</td>
+        <td>{{ item.quantidade }}</td>
+        <td>{{ item.total | currency : "R$" }}</td>
+        <td>
+          <small>{{ item.descricao }}</small>
+        </td>
+        <td>{{ item.dataCriacao | date : "dd/MM/yy HH:mm" }}</td>
+        <td>{{ item.dataUltimaAlteracao | date : "dd/MM/yy HH:mm" }}</td>
+        <td>
+          <button
+            class="btn btn-sm btn-outline-primary me-2"
+            [routerLink]="['/pages/edicao-produtos', item.id]"
+          >
+            Editar
+          </button>
+          <button
+            class="btn btn-sm btn-outline-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#modalExclusao"
+            (click)="onDelete(item)"
+          >
+            Excluir
+          </button>
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8">Quantidade de produtos: {{ produtos.length }}</td>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+<!-- Janela modal -->
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="modalExclusao"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Excluir Produto</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>Deseja realmente excluir o produto selecionado?</p>
+        <hr />
+
+        <div class="row mb-2">
+          <div class="col-md-3">Nome:</div>
+          <div class="col-md-9">
+            {{ produto?.nome | uppercase }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Descrição:</div>
+          <div class="col-md-9">
+            {{ produto?.descricao }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Preço:</div>
+          <div class="col-md-9">
+            {{ produto?.preco | currency : "R$" }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Quantidade:</div>
+          <div class="col-md-9">
+            {{ produto?.quantidade }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Total:</div>
+          <div class="col-md-9">
+            {{ produto?.total | currency : "R$" }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Criado em:</div>
+          <div class="col-md-9">
+            {{ produto?.dataCriacao | date : "dd/MM/yyyy HH:mm" }}
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <div class="col-md-3">Alterado em:</div>
+          <div class="col-md-9">
+            {{ produto?.dataUltimaAlteracao | date : "dd/MM/yyyy HH:mm" }}
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onDeleteConfirm()"
+          data-bs-dismiss="modal"
+        >
+          Confirmar exclusão
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
