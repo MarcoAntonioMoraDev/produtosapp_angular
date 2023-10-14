@@ -5,5 +5,7 @@
 */
 export const environment = {
     /* URL da api de produtos */
-    produtosApi: 'http://marcoantoniodev-001-site1.atempurl.com/api'
+    produtosApi: 'http://marcoantoniodev-001-site1.atempurl.com/api',
+    /* URL da api de usuários */
+    usuariosApi: 'http://usuariosapi-001-site1.ctempurl.com/api'
 };
